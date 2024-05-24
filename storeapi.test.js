@@ -82,6 +82,11 @@ describe('Pet Store API', () => {
       expect(response.status).toBe(404);
       expect(response.body).toEqual({});
     });
+
+    it('should return 200 when a valid ID is provided', async () => {
+      const response = await deletePet(petId);
+      expect(response.status).toBe(200);
+    });
   });
 
   describe('Finding Pets by status', () => {
@@ -121,6 +126,11 @@ describe('Pet Store API', () => {
       expect(response.status).toBe(404);
       expect(response.body).toEqual(expect.objectContaining({ message: 'java.lang.NumberFormatException: For input string: "invalid_id"' }));
     });
+
+    it('should return 200 for existing ID', async () => {
+      const response = await findPetById(petId);
+      expect(response.status).toBe(200);
+    });
   });
 
   describe('Updating pets', () => {
@@ -152,6 +162,14 @@ describe('Pet Store API', () => {
         name: 'UpdatedName',
         status: 'sold'
       }));
+    });
+
+    it('should return 200 when a valid ID and data are provided', async () => {
+      const response = await updatePet(petId, {
+        name: 'UpdatedName',
+        status: 'sold'
+      });
+      expect(response.status).toBe(200);
     });
   });
 });
